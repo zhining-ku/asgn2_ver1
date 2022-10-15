@@ -1,0 +1,104 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A simple bar chart with embedded data.",
+  "title": "Overall score for top 100 universities",
+    "width": 500,
+    "height": 1500,
+
+  "layer":[{
+    "data":{
+       "url":" https://raw.githubusercontent.com/zhining-ku/fit3179week9/main/QS%20World%20University%20Rankings%202022_ver2.csv"
+    },
+    "layer":[{
+      "mark": {"type": "bar", "tooltip": true},
+      
+      "encoding": {
+        "x": {"field":"score","type":"quantitative"},
+        "y": {"field":"university", "type":"nominal", "axis": { "labelLimit": 0},"sort":""}
+      }
+      
+   
+    },
+    {
+      "mark": "bar",
+      "transform": [
+        {"filter": "datum.score >= 94.5"},
+        {"calculate": "94.5", "as": "baseline"}
+      ],
+      "encoding": {
+        "y": {"field": "university", "type": "nominal","title":""},
+        "x": {"field": "baseline", "type": "quantitative", "title": "Overall Score"},
+        "x2": {"field": "score"},
+        "color": {"value": "#e45755"}
+      }
+    }],
+     "params": [{
+          "name": "region",
+          "bind": {"input": "select", 
+          "options": [null, "Asia", "North America", "Europe", "Oceania", "Latin America"
+              ],
+      "labels":[
+      "Show All",
+      "Asia", "North America", "Europe", "Oceania", "Latin America"
+      ],
+      "name": "Continent Selection: "
+      }
+      }
+      ],
+      "transform": [
+          {"filter": "region==null  || datum.region== region"},
+          {"filter": "datum.rank_display<=100"}
+      ]
+
+  },{
+    "data": {
+       "values": [{}]
+    },
+    "encoding": {
+      "x": {"datum": 94.5}
+    },
+    "layer": [{
+      "mark": "rule"
+    }, {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": -2,
+        "dy": -2,
+        "x": "width",
+        "text": "Top 10 Universities"
+      }
+    }]
+  }
+
+  ],
+      "params": [{
+          "name": "region",
+          "bind": {"input": "select", 
+          "options": [null, "Asia", "North America", "Europe", "Oceania", "Latin America"
+              ],
+      "labels":[
+      "Show All",
+      "Asia", "North America", "Europe", "Oceania", "Latin America"
+      ],
+      "name": "Continent Selection: "
+      }
+      }
+      ],
+      "transform": [
+          {"filter": "region==null  || datum.region== region"},
+          {"filter": "datum.rank_display<=100"}
+      ]
+
+
+
+
+
+}
+
+
+
+  
+
+        
